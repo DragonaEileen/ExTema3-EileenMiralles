@@ -7,21 +7,23 @@ package fecha;
  */
 public class Fecha {
 	
+	private static final int DIEZ = 10;
+
 	/* Atributos */
 	/**
 	 * Valor del día
 	 */
-	private int d; //d�a
+	private int dayValue; //dayValue�yearValue
 	
 	/**
 	 * Valor del mes
 	 */
-	private int m; //mes
+	private int monthValue; //mes
 	
 	/**
 	 * Valor del año
 	 */
-	private int a; //a�o
+	private int yearValue; //yearValue�o
 
 	/* Constructors */
 	/**
@@ -39,9 +41,9 @@ public class Fecha {
 	 * @param anio Valor del año
 	 */
 	public Fecha(int dia, int mes, int anio) {
-		this.d = dia;
-		this.m = mes;
-		this.a = anio;
+		this.dayValue = dia;
+		this.monthValue = mes;
+		this.yearValue = anio;
 	}
 
 	/* Metodos */
@@ -51,25 +53,28 @@ public class Fecha {
 	 * @return diaCorrecto&&mesCorrecto&&anioCorrecto Booleano que indica si los datos son válidos
 	 */
 	public boolean fechaCorrecta() {
-		boolean diaCorrecto, mesCorrecto, anioCorrecto;
-		anioCorrecto = a > 0;
-		mesCorrecto = m >= 1 && m <= 12;
-		switch (m) {
+		boolean diaCorrecto; 
+		boolean mesCorrecto;
+		boolean anioCorrecto;
+		anioCorrecto = yearValue > 0;
+		mesCorrecto = monthValue >= 1 && monthValue <= 12;
+		boolean diaMayor1 = dayValue >= 1;
+		switch (monthValue) {
 		case 2:
 			if (esBisiesto()) {
-				diaCorrecto = d >= 1 && d <= 29;
+				diaCorrecto = diaMayor1 && dayValue <= 29;
 			} else {
-				diaCorrecto = d >= 1 && d <= 28;
+				diaCorrecto = diaMayor1 && dayValue <= 28;
 			}
 			break;
 		case 4:
 		case 6:
 		case 9:
 		case 11:
-			diaCorrecto = d >= 1 && d <= 30;
+			diaCorrecto = diaMayor1 && dayValue <= 30;
 			break;
 		default:
-			diaCorrecto = d >= 1 && d <= 31;
+			diaCorrecto = diaMayor1 && dayValue <= 31;
 		}
 		return diaCorrecto && mesCorrecto && anioCorrecto;
 	}
@@ -81,22 +86,21 @@ public class Fecha {
 	 */
 	// M�todo esBisiesto. Solo lo usa fechaCorrecta, por eso es privado
 	private boolean esBisiesto() {
-		boolean esBisiesto = (a % 4 == 0 && a % 100 != 0 || a % 400 == 0);
-		return esBisiesto;
+		return yearValue % 4 == 0 && yearValue % 100 != 0 || yearValue % 400 == 0;
 	}
 
 	/**
-	 * Metodo que suma un día a la fecha
+	 * Metodo que suma un día yearValue la fecha
 	 */
 	// M�todo diaSiguiente
-	public void diaSiguiente() {
-		d++;
+	public void nextDay() {
+		dayValue++;
 		if (!fechaCorrecta()) {
-			d = 1;
-			m++;
+			dayValue = 1;
+			monthValue++;
 			if (!fechaCorrecta()) {
-				m = 1;
-				a++;
+				monthValue = 1;
+				yearValue++;
 			}
 		}
 	}
@@ -108,15 +112,23 @@ public class Fecha {
 	 */
 	// M�todo toString
 	public String toString() {
-		if (d < 10 && m < 10) {
-			return "0" + d + "-0" + m + "-" + a;
-		} else if (d < 10 && m >= 10) {
-			return "0" + d + "-" + m + "-" + a;
-		} else if (d >= 10 && m < 10) {
-			return d + "-0" + m + "-" + a;
+		
+		/* Declaraciones */
+			/* Per Code Clarity: Variable yearValue retornar */
+		String res = "";
+		
+		if (dayValue < DIEZ && monthValue < DIEZ) {
+			res = "0" + dayValue + "-0" + monthValue + "-" + yearValue;
+		} else if (dayValue < DIEZ && monthValue >= DIEZ) {
+			res = "0" + dayValue + "-" + monthValue + "-" + yearValue;
+		} else if (dayValue >= DIEZ && monthValue < DIEZ) {
+			res = dayValue + "-0" + monthValue + "-" + yearValue;
 		} else {
-			return d + "-" + m + "-" + a;
+			res = dayValue + "-" + monthValue + "-" + yearValue;
 		}
+		
+		/* Return */
+		return res;
 	}
 
 }
