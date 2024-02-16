@@ -1,24 +1,55 @@
 package fecha;
 
+/**
+ * Clase que contiene los atributos día, mes y año y métodos para observar la fecha
+ * 
+ * @author Elena
+ */
 public class Fecha {
-	private int d; //d�a
-	private int m; //mes
-	private int a; //a�o
-
 	
+	/* Atributos */
+	/**
+	 * Valor del día
+	 */
+	private int d; //d�a
+	
+	/**
+	 * Valor del mes
+	 */
+	private int m; //mes
+	
+	/**
+	 * Valor del año
+	 */
+	private int a; //a�o
+
+	/* Constructors */
+	/**
+	 * Constructor SIN Parámetros
+	 */
 	public Fecha() {
 
 	}
 
-	
+	/**
+	 * Constructor CON Parametros
+	 * 
+	 * @param dia Valor del día
+	 * @param mes Valor del mes
+	 * @param anio Valor del año
+	 */
 	public Fecha(int dia, int mes, int anio) {
 		this.d = dia;
 		this.m = mes;
 		this.a = anio;
 	}
 
-	
-	
+	/* Metodos */
+	/**
+	 * Método que comprueba si los valores del año, mes y dia son correctos o válidos
+	 * 
+	 * @return diaCorrecto&&mesCorrecto&&anioCorrecto Booleano que indica si los datos son válidos
+	 */
 	public boolean fechaCorrecta() {
 		boolean diaCorrecto, mesCorrecto, anioCorrecto;
 		anioCorrecto = a > 0;
@@ -43,13 +74,21 @@ public class Fecha {
 		return diaCorrecto && mesCorrecto && anioCorrecto;
 	}
 
-	// M�todo esBisiesto. Solo lo usa fechaCorrecta, por eso es privado
+	/**
+	 * Método privado que devuelve true si un año es bisiesto, o false si no
+	 * 
+	 * @return esBisiesto Booleano que indica si un año es bisiesto
+	 */
+	// M�todo esBisiesto. Solo lo usa fechaCorrecta, por eso es privado
 	private boolean esBisiesto() {
 		boolean esBisiesto = (a % 4 == 0 && a % 100 != 0 || a % 400 == 0);
 		return esBisiesto;
 	}
 
-	// M�todo diaSiguiente
+	/**
+	 * Metodo que suma un día a la fecha
+	 */
+	// M�todo diaSiguiente
 	public void diaSiguiente() {
 		d++;
 		if (!fechaCorrecta()) {
@@ -62,7 +101,12 @@ public class Fecha {
 		}
 	}
 
-	// M�todo toString
+	/**
+	 * Metodo que devuelve una Cadena compuesta por la fecha
+	 * 
+	 * @return cadena Cadena compuesta por el día, el mes y el año separados por guiones
+	 */
+	// M�todo toString
 	public String toString() {
 		if (d < 10 && m < 10) {
 			return "0" + d + "-0" + m + "-" + a;
